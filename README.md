@@ -5,6 +5,7 @@ Background script for changing active window position and size with
 global Windows hotkeys. 
 
 Hotkeys:
+
 Key                                 | Action
 ----------------------------------- | -----------------------------------------
 Win Alt        + Left/Right/Up/Down | move window one step left/right/up/down
@@ -15,6 +16,7 @@ Win            + Numpad X           | move and size window to grid position X
 Win            + F10                | exit program
 
 Grid hotkeys:
+
 Key            | Action
 -------------- | -------------------------------------------------------
 Win + Numpad 1 | left edge, third of screen width, full height
