@@ -43,34 +43,6 @@ MIN_Y = -4
 user32 = ctypes.windll.user32
 window_rects = {} # Cache of {window handle: (x, y, w, h)} before last change
 
-SPI_GETWORKAREA = 48
-VK_LEFT = 37
-VK_UP = 38
-VK_RIGHT = 39
-VK_DOWN = 40
-VK_NUMPAD0 =  96
-VK_NUMPAD1 =  97
-VK_NUMPAD2 =  98
-VK_NUMPAD3 =  99
-VK_NUMPAD4 = 100
-VK_NUMPAD5 = 101
-VK_NUMPAD6 = 102
-VK_NUMPAD7 = 103
-VK_NUMPAD8 = 104
-VK_NUMPAD9 = 104
-VK_F10     = 121
-MOD_ALT = 1
-MOD_CONTROL = 2
-MOD_SHIFT = 4
-MOD_WIN = 8
-SW_MAXIMIZE = 3
-SW_RESTORE = 9
-SM_CXSCREEN = 0
-SM_CYSCREEN = 1
-SM_CXMIN = 28
-SM_CYMIN = 28
-WM_HOTKEY = 786
-
 """
 user32.dll functions used:
 
@@ -82,6 +54,34 @@ IsZoomed(hwnd)  is window maximized
 ShowWindow(hwnd, SW_MAXIMIZE|SW_RESTORE)  maximize or restore window
 MoveWindow(hwnd, x, y, w, h, do_repaint)  move and size window
 """
+MOD_ALT         =   1
+MOD_CONTROL     =   2
+MOD_SHIFT       =   4
+MOD_WIN         =   8
+SPI_GETWORKAREA =  48
+SW_MAXIMIZE     =   3
+SW_RESTORE      =   9
+SM_CXSCREEN     =   0
+SM_CYSCREEN     =   1
+SM_CXMIN        =  28
+SM_CYMIN        =  28
+VK_LEFT         =  37
+VK_UP           =  38
+VK_RIGHT        =  39
+VK_DOWN         =  40
+VK_NUMPAD0      =  96
+VK_NUMPAD1      =  97
+VK_NUMPAD2      =  98
+VK_NUMPAD3      =  99
+VK_NUMPAD4      = 100
+VK_NUMPAD5      = 101
+VK_NUMPAD6      = 102
+VK_NUMPAD7      = 103
+VK_NUMPAD8      = 104
+VK_NUMPAD9      = 104
+VK_F10          = 121
+WM_HOTKEY       = 786
+
 
 def get_state(key=None):
     """
@@ -114,14 +114,14 @@ def window_grid(key):
     MAX_H = workarea[3] - workarea[1] - 2 * MIN_Y
     MAX_R = workarea[2] - MIN_X
     grid_areas = {
-        VK_NUMPAD1: (MIN_X, MIN_Y, MAX_W / 3, MAX_H),
-        VK_NUMPAD2: (MIN_X, MIN_Y, MAX_W * 2/5, MAX_H),
-        VK_NUMPAD3: (MIN_X, MIN_Y, MAX_W / 2, MAX_H),
-        VK_NUMPAD4: (MIN_X, MIN_Y, MAX_W * 3/5, MAX_H),
-        VK_NUMPAD6: (MAX_R - MAX_W / 2, MIN_Y, MAX_W / 2, MAX_H),
-        VK_NUMPAD7: (MAX_R - MAX_W * 2/5, MIN_Y, MAX_W * 2/5, MAX_H),
-        VK_NUMPAD8: (MAX_R - MAX_W / 3, MIN_Y, MAX_W / 3, MAX_H),
-        VK_NUMPAD9: (MAX_R - MAX_W / 3, MIN_Y, MAX_W / 3, MAX_H / 2),
+        VK_NUMPAD1: (MIN_X, MIN_Y, MAX_W // 3, MAX_H),
+        VK_NUMPAD2: (MIN_X, MIN_Y, MAX_W * 2//5, MAX_H),
+        VK_NUMPAD3: (MIN_X, MIN_Y, MAX_W // 2, MAX_H),
+        VK_NUMPAD4: (MIN_X, MIN_Y, MAX_W * 3//5, MAX_H),
+        VK_NUMPAD6: (MAX_R - MAX_W // 2, MIN_Y, MAX_W // 2, MAX_H),
+        VK_NUMPAD7: (MAX_R - MAX_W * 2//5, MIN_Y, MAX_W * 2//5, MAX_H),
+        VK_NUMPAD8: (MAX_R - MAX_W // 3, MIN_Y, MAX_W // 3, MAX_H),
+        VK_NUMPAD9: (MAX_R - MAX_W // 3, MIN_Y, MAX_W // 3, MAX_H // 2),
     }
 
     if key in grid_areas:

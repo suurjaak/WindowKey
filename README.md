@@ -35,7 +35,7 @@ Win + Numpad 0 | restore window previous position and size
 Dependencies
 ------------
 
-Runs under Windows.
+Runs under Windows, Python 2.6+ or 3.
 
 
 License
