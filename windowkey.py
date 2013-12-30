@@ -35,7 +35,6 @@ import os
 import ctypes
 import ctypes.wintypes
 import sys
-import win32con
 
 STEP = 10  # Move and size step, in pixels
 MIN_X = -4 # Window top left looks best when slightly out of screen bounds
@@ -44,6 +43,33 @@ MIN_Y = -4
 user32 = ctypes.windll.user32
 window_rects = {} # Cache of {window handle: (x, y, w, h)} before last change
 
+SPI_GETWORKAREA = 48
+VK_LEFT = 37
+VK_UP = 38
+VK_RIGHT = 39
+VK_DOWN = 40
+VK_NUMPAD0 =  96
+VK_NUMPAD1 =  97
+VK_NUMPAD2 =  98
+VK_NUMPAD3 =  99
+VK_NUMPAD4 = 100
+VK_NUMPAD5 = 101
+VK_NUMPAD6 = 102
+VK_NUMPAD7 = 103
+VK_NUMPAD8 = 104
+VK_NUMPAD9 = 104
+VK_F10     = 121
+MOD_ALT = 1
+MOD_CONTROL = 2
+MOD_SHIFT = 4
+MOD_WIN = 8
+SW_MAXIMIZE = 3
+SW_RESTORE = 9
+SM_CXSCREEN = 0
+SM_CYSCREEN = 1
+SM_CXMIN = 28
+SM_CYMIN = 28
+WM_HOTKEY = 786
 
 """
 user32.dll functions used:
@@ -63,11 +89,11 @@ def get_state(key=None):
             (desktop area left, top, right, bottom), {arrow-key pressed states}
     """
     rect = ctypes.wintypes.RECT()
-    user32.SystemParametersInfoA(win32con.SPI_GETWORKAREA, 0, ctypes.byref(rect), 0)
+    user32.SystemParametersInfoA(SPI_GETWORKAREA, 0, ctypes.byref(rect), 0)
     workarea = [rect.left, rect.top, rect.right, rect.bottom]
 
     # Combine current key-press with other arrow keys being pressed
-    ARROWS = (win32con.VK_UP, win32con.VK_DOWN, win32con.VK_LEFT, win32con.VK_RIGHT)
+    ARROWS = (VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT)
     keydown = dict((k, k == key) for k in ARROWS)
     keystates = zip(ARROWS, map(user32.GetKeyState, ARROWS))
     keydown.update((k, True) for k, s in keystates if s in [-127, -128])
@@ -88,30 +114,30 @@ def window_grid(key):
     MAX_H = workarea[3] - workarea[1] - 2 * MIN_Y
     MAX_R = workarea[2] - MIN_X
     grid_areas = {
-        win32con.VK_NUMPAD1: (MIN_X, MIN_Y, MAX_W / 3, MAX_H),
-        win32con.VK_NUMPAD2: (MIN_X, MIN_Y, MAX_W * 2/5, MAX_H),
-        win32con.VK_NUMPAD3: (MIN_X, MIN_Y, MAX_W / 2, MAX_H),
-        win32con.VK_NUMPAD4: (MIN_X, MIN_Y, MAX_W * 3/5, MAX_H),
-        win32con.VK_NUMPAD6: (MAX_R - MAX_W / 2, MIN_Y, MAX_W / 2, MAX_H),
-        win32con.VK_NUMPAD7: (MAX_R - MAX_W * 2/5, MIN_Y, MAX_W * 2/5, MAX_H),
-        win32con.VK_NUMPAD8: (MAX_R - MAX_W / 3, MIN_Y, MAX_W / 3, MAX_H),
-        win32con.VK_NUMPAD9: (MAX_R - MAX_W / 3, MIN_Y, MAX_W / 3, MAX_H / 2),
+        VK_NUMPAD1: (MIN_X, MIN_Y, MAX_W / 3, MAX_H),
+        VK_NUMPAD2: (MIN_X, MIN_Y, MAX_W * 2/5, MAX_H),
+        VK_NUMPAD3: (MIN_X, MIN_Y, MAX_W / 2, MAX_H),
+        VK_NUMPAD4: (MIN_X, MIN_Y, MAX_W * 3/5, MAX_H),
+        VK_NUMPAD6: (MAX_R - MAX_W / 2, MIN_Y, MAX_W / 2, MAX_H),
+        VK_NUMPAD7: (MAX_R - MAX_W * 2/5, MIN_Y, MAX_W * 2/5, MAX_H),
+        VK_NUMPAD8: (MAX_R - MAX_W / 3, MIN_Y, MAX_W / 3, MAX_H),
+        VK_NUMPAD9: (MAX_R - MAX_W / 3, MIN_Y, MAX_W / 3, MAX_H / 2),
     }
 
     if key in grid_areas:
         x, y, w, h = grid_areas[key]
         if user32.IsZoomed(hwnd): # Clear maximized flag
-            user32.ShowWindow(hwnd, win32con.SW_RESTORE)
+            user32.ShowWindow(hwnd, SW_RESTORE)
         user32.MoveWindow(hwnd, x, y, w, h, True)
-    elif win32con.VK_NUMPAD5 == key: # Maximize window
-        action = win32con.SW_RESTORE if user32.IsZoomed(hwnd) \
-                 else win32con.SW_MAXIMIZE
+    elif VK_NUMPAD5 == key: # Maximize window
+        action = SW_RESTORE if user32.IsZoomed(hwnd) \
+                 else SW_MAXIMIZE
         user32.ShowWindow(hwnd, action)
-    elif win32con.VK_NUMPAD0 == key: # Restore last size and position
+    elif VK_NUMPAD0 == key: # Restore last size and position
         if hwnd in window_rects:
             x, y, w, h = window_rects[hwnd]
             if user32.IsZoomed(hwnd): # Clear maximized flag
-                user32.ShowWindow(hwnd, win32con.SW_RESTORE)
+                user32.ShowWindow(hwnd, SW_RESTORE)
             user32.MoveWindow(hwnd, x, y, w, h, True)
     # @todo flag maximized state somehow
     window_rects[hwnd] = window_rect
@@ -123,16 +149,16 @@ def window_move(key):
     hwnd, window_rect, workarea, keydown = get_state(key)
     x, y, w, h = window_rect
 
-    if keydown[win32con.VK_UP]: # Move up, if possible
+    if keydown[VK_UP]: # Move up, if possible
         if y - MIN_Y > workarea[1]:
             y = max(MIN_Y, y - STEP)
-    elif keydown[win32con.VK_DOWN]: # Move down
+    elif keydown[VK_DOWN]: # Move down
         if y + h - MIN_Y < workarea[3]:
             y = min(workarea[3] - MIN_Y, y + STEP)
     # Move diagonally if two arrow keys are down
-    if keydown[win32con.VK_LEFT]: # Move left
+    if keydown[VK_LEFT]: # Move left
         x = max(MIN_X, x - STEP)
-    elif keydown[win32con.VK_RIGHT]: # Move right
+    elif keydown[VK_RIGHT]: # Move right
         if x + w - MIN_X < workarea[2]:
             x = min(workarea[2] - MIN_X, x + STEP)
     if (x, y, w, h) != window_rect:
@@ -146,18 +172,18 @@ def window_edge(key):
     hwnd, window_rect, workarea, keydown = get_state(key)
     x, y, w, h = window_rect
 
-    if win32con.VK_UP == key: # Snap to top
+    if VK_UP == key: # Snap to top
         if y > MIN_Y:
             y = MIN_Y
-    elif win32con.VK_DOWN == key: # Snap to bottom
+    elif VK_DOWN == key: # Snap to bottom
         if y + h - MIN_Y < workarea[3]:
             y = workarea[3] - h - MIN_Y
         elif y + h == workarea[3]: # At taskbar bottom: snap to screen bottom
-            y = user32.GetSystemMetrics(win32con.SM_CYSCREEN) - h - MIN_Y
-    elif win32con.VK_LEFT == key: # Snap to left
+            y = user32.GetSystemMetrics(SM_CYSCREEN) - h - MIN_Y
+    elif VK_LEFT == key: # Snap to left
         if x > MIN_X:
             x = MIN_X
-    elif win32con.VK_RIGHT == key: # Snap to right
+    elif VK_RIGHT == key: # Snap to right
         if x - MIN_X < workarea[2]:
             x = workarea[2] - w - MIN_X 
     if (x, y, w, h) != window_rect:
@@ -171,17 +197,17 @@ def window_size(key):
     hwnd, window_rect, workarea, keydown = get_state(key)
     x, y, w, h = window_rect
 
-    if keydown[win32con.VK_UP]: # Decrease window height from below
-        if h > user32.GetSystemMetrics(win32con.SM_CYMIN):
+    if keydown[VK_UP]: # Decrease window height from below
+        if h > user32.GetSystemMetrics(SM_CYMIN):
             h = h - STEP
-    elif keydown[win32con.VK_DOWN]: # Increase window height below
+    elif keydown[VK_DOWN]: # Increase window height below
         if y + h - MIN_Y < workarea[3]:
             h = min(workarea[3] - MIN_Y, h + STEP)
     # Size diagonally if two arrow keys are down
-    if keydown[win32con.VK_LEFT]: # Decrease window width from right
-        if w > user32.GetSystemMetrics(win32con.SM_CXMIN):
+    if keydown[VK_LEFT]: # Decrease window width from right
+        if w > user32.GetSystemMetrics(SM_CXMIN):
             w = w - STEP
-    elif keydown[win32con.VK_RIGHT]: # Increase window width to the right
+    elif keydown[VK_RIGHT]: # Increase window width to the right
         if x + w < workarea[2] - MIN_X:
             w = min(workarea[2] - x - MIN_X, w + STEP)
     if (x, y, w, h) != window_rect:
@@ -195,36 +221,36 @@ def close(key=None):
 
 HOTKEYS = {
   # Move one step
-  1: (win32con.VK_UP, win32con.MOD_WIN | win32con.MOD_ALT),
-  2: (win32con.VK_DOWN, win32con.MOD_WIN | win32con.MOD_ALT),
-  3: (win32con.VK_LEFT, win32con.MOD_WIN | win32con.MOD_ALT),
-  4: (win32con.VK_RIGHT, win32con.MOD_WIN | win32con.MOD_ALT),
+  1: (VK_UP, MOD_WIN | MOD_ALT),
+  2: (VK_DOWN, MOD_WIN | MOD_ALT),
+  3: (VK_LEFT, MOD_WIN | MOD_ALT),
+  4: (VK_RIGHT, MOD_WIN | MOD_ALT),
 
   # Move to screen edge
-  5: (win32con.VK_UP, win32con.MOD_WIN | win32con.MOD_CONTROL),
-  6: (win32con.VK_DOWN, win32con.MOD_WIN | win32con.MOD_CONTROL),
-  7: (win32con.VK_LEFT, win32con.MOD_WIN | win32con.MOD_CONTROL),
-  8: (win32con.VK_RIGHT, win32con.MOD_WIN | win32con.MOD_CONTROL),
+  5: (VK_UP, MOD_WIN | MOD_CONTROL),
+  6: (VK_DOWN, MOD_WIN | MOD_CONTROL),
+  7: (VK_LEFT, MOD_WIN | MOD_CONTROL),
+  8: (VK_RIGHT, MOD_WIN | MOD_CONTROL),
 
   # Resize lower/higher/narrower/wider
-  9: (win32con.VK_UP, win32con.MOD_WIN | win32con.MOD_CONTROL | win32con.MOD_SHIFT),
- 10: (win32con.VK_DOWN, win32con.MOD_WIN | win32con.MOD_CONTROL | win32con.MOD_SHIFT),
- 11: (win32con.VK_LEFT, win32con.MOD_WIN | win32con.MOD_CONTROL | win32con.MOD_SHIFT),
- 12: (win32con.VK_RIGHT, win32con.MOD_WIN | win32con.MOD_CONTROL | win32con.MOD_SHIFT),
+  9: (VK_UP, MOD_WIN | MOD_CONTROL | MOD_SHIFT),
+ 10: (VK_DOWN, MOD_WIN | MOD_CONTROL | MOD_SHIFT),
+ 11: (VK_LEFT, MOD_WIN | MOD_CONTROL | MOD_SHIFT),
+ 12: (VK_RIGHT, MOD_WIN | MOD_CONTROL | MOD_SHIFT),
 
   # Move and size to grid
- 13: (win32con.VK_NUMPAD1, win32con.MOD_WIN),
- 14: (win32con.VK_NUMPAD2, win32con.MOD_WIN),
- 15: (win32con.VK_NUMPAD3, win32con.MOD_WIN),
- 16: (win32con.VK_NUMPAD4, win32con.MOD_WIN),
- 17: (win32con.VK_NUMPAD5, win32con.MOD_WIN),
- 18: (win32con.VK_NUMPAD6, win32con.MOD_WIN),
- 19: (win32con.VK_NUMPAD7, win32con.MOD_WIN),
- 20: (win32con.VK_NUMPAD8, win32con.MOD_WIN),
- 21: (win32con.VK_NUMPAD9, win32con.MOD_WIN),
- 22: (win32con.VK_NUMPAD0, win32con.MOD_WIN),
+ 13: (VK_NUMPAD1, MOD_WIN),
+ 14: (VK_NUMPAD2, MOD_WIN),
+ 15: (VK_NUMPAD3, MOD_WIN),
+ 16: (VK_NUMPAD4, MOD_WIN),
+ 17: (VK_NUMPAD5, MOD_WIN),
+ 18: (VK_NUMPAD6, MOD_WIN),
+ 19: (VK_NUMPAD7, MOD_WIN),
+ 20: (VK_NUMPAD8, MOD_WIN),
+ 21: (VK_NUMPAD9, MOD_WIN),
+ 22: (VK_NUMPAD0, MOD_WIN),
 
- 99: (win32con.VK_F10, win32con.MOD_WIN),
+ 99: (VK_F10, MOD_WIN),
 }
 
 
@@ -253,7 +279,7 @@ def keyhandler_loop():
     try:
         msg = ctypes.wintypes.MSG()
         while user32.GetMessageA(ctypes.byref(msg), None, 0, 0) != 0:
-            if msg.message == win32con.WM_HOTKEY:
+            if msg.message == WM_HOTKEY:
                 if msg.wParam in HOTKEY_ACTIONS:
                     HOTKEY_ACTIONS[msg.wParam](key=HOTKEYS[msg.wParam][0])
             # Post character messages to queue, create message loop.

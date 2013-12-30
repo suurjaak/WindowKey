@@ -15,6 +15,7 @@ Win Ctrl Shift + Right/Up           | decrease window width/height
 Win            + Numpad X           | move and size window to grid position X
 Win            + F10                | exit program
 
+
 Grid hotkeys:
 
 Key            | Action
@@ -34,7 +35,7 @@ Win + Numpad 0 | restore window previous position and size
 Dependencies
 ------------
 
-Runs under Windows. Requires pywin32 (https://pypi.python.org/pypi/pywin32).
+Runs under Windows.
 
 
 License
