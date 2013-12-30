@@ -270,6 +270,7 @@ HOTKEY_ACTIONS = {
 
 
 def keyhandler_loop():
+    """Registers hotkeys and listens to event messages."""
     for id, (vk, modifiers) in HOTKEYS.items():
         print("Registering hotkey %3d with modifier %2d for action %s." % (vk, modifiers, HOTKEY_ACTIONS.get(id)))
         if not user32.RegisterHotKey(None, id, modifiers, vk):
