@@ -16,7 +16,7 @@ Grid hotkeys:
 - Win + Numpad 1    left edge, third of screen width, full height
 - Win + Numpad 2    left edge, 2/5 of screen width, full height
 - Win + Numpad 3    left edge, half of screen width, full height
-- Win + Numpad 4    left edge, 2 thirds of screen width, full height
+- Win + Numpad 4    left edge, 3/5 of screen width, full height
 - Win + Numpad 5    maximize window
 - Win + Numpad 6    right edge, half of screen width, full height
 - Win + Numpad 7    right edge, 2/5 of screen width, full height

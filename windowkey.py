@@ -15,7 +15,7 @@ Grid hotkeys:
 - Win + Numpad 1    left edge, third of screen width, full height
 - Win + Numpad 2    left edge, 2/5 of screen width, full height
 - Win + Numpad 3    left edge, half of screen width, full height
-- Win + Numpad 4    left edge, 2 thirds of screen width, full height
+- Win + Numpad 4    left edge, 3/5 of screen width, full height
 - Win + Numpad 5    maximize window
 - Win + Numpad 6    right edge, half of screen width, full height
 - Win + Numpad 7    right edge, 2/5 of screen width, full height
@@ -41,6 +41,10 @@ STEP = 10  # Move and size step, in pixels
 MIN_X = -4 # Window top left looks best when slightly out of screen bounds
 MIN_Y = -4
 
+user32 = ctypes.windll.user32
+window_rects = {} # Cache of {window handle: (x, y, w, h)} before last change
+
+
 """
 user32.dll functions used:
 
@@ -52,9 +56,6 @@ IsZoomed(hwnd)  is window maximized
 ShowWindow(hwnd, SW_MAXIMIZE|SW_RESTORE)  maximize or restore window
 MoveWindow(hwnd, x, y, w, h, do_repaint)  move and size window
 """
-user32 = ctypes.windll.user32
-window_rects = {} # Cache of {window handle: (x, y, w, h)} before last change
-
 
 def get_state(key=None):
     """
@@ -90,7 +91,7 @@ def window_grid(key):
         win32con.VK_NUMPAD1: (MIN_X, MIN_Y, MAX_W / 3, MAX_H),
         win32con.VK_NUMPAD2: (MIN_X, MIN_Y, MAX_W * 2/5, MAX_H),
         win32con.VK_NUMPAD3: (MIN_X, MIN_Y, MAX_W / 2, MAX_H),
-        win32con.VK_NUMPAD4: (MIN_X, MIN_Y, MAX_W * 2/3, MAX_H),
+        win32con.VK_NUMPAD4: (MIN_X, MIN_Y, MAX_W * 3/5, MAX_H),
         win32con.VK_NUMPAD6: (MAX_R - MAX_W / 2, MIN_Y, MAX_W / 2, MAX_H),
         win32con.VK_NUMPAD7: (MAX_R - MAX_W * 2/5, MIN_Y, MAX_W * 2/5, MAX_H),
         win32con.VK_NUMPAD8: (MAX_R - MAX_W / 3, MIN_Y, MAX_W / 3, MAX_H),
