@@ -271,13 +271,18 @@ HOTKEY_ACTIONS = {
 
 def keyhandler_loop():
     """Registers hotkeys and listens to event messages."""
-    for id, (vk, modifiers) in HOTKEYS.items():
-        print("Registering hotkey %3d with modifier %2d for action %s." % (vk, modifiers, HOTKEY_ACTIONS.get(id)))
-        if not user32.RegisterHotKey(None, id, modifiers, vk):
-            print("Unable to register %3d with modifier %2d at id %s." % (vk, modifiers, id))
-    print("Press Win + F10 to exit program.")
-
     try:
+        for id, (vk, modifiers) in HOTKEYS.items():
+            print("Registering id %d (0x%02X, modifier 0x%02X) for %s()."
+                  % (id, vk, modifiers, HOTKEY_ACTIONS[id].func_name))
+            if not user32.RegisterHotKey(None, id, modifiers, vk):
+                print("Unable to register id %s (0x%02X, modifier 0x%02X)."
+                      % (id, vk, modifiers))
+                if VK_F10 == vk:
+                    print("Unable to register exit hotkey, exiting.")
+                    return 
+        print("Press Win + F10 to exit program.")
+
         msg = ctypes.wintypes.MSG()
         while user32.GetMessageA(ctypes.byref(msg), None, 0, 0) != 0:
             if msg.message == WM_HOTKEY:
