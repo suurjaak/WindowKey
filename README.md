@@ -13,7 +13,8 @@ Win Ctrl       + Left/Right/Up/Down | snap window to left/right/top/bottom edge
 Win Ctrl Shift + Left/Down          | increase window width/height
 Win Ctrl Shift + Right/Up           | decrease window width/height
 Win            + F10                | exit program
-**Win            + Numpad X**       | **move and size window to grid position X**
+ | 
+***Win            + Numpad X***     | ***move and size window to grid position X***
 Win + Numpad 1                      | left edge, third of screen width, full height
 Win + Numpad 2                      | left edge, 2/5 of screen width, full height
 Win + Numpad 3                      | left edge, half of screen width, full height
