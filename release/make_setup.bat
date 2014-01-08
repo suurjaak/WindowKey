@@ -14,9 +14,7 @@ if not exist "%NSISDIR%" set NSISDIR=C:\Program Files\Nullsoft Scriptable Instal
 if not exist "%NSISDIR%" set NSISDIR=C:\Program Files (x86)\NSIS
 if not exist "%NSISDIR%" set NSISDIR=C:\Program Files\NSIS
 "%NSISDIR%\makensis.exe" /DPRODUCT_VERSION=%VERSION% /DSOURCE_DIR="%SOURCEDIR%" "exe_setup.nsi"
+if ERRORLEVEL 1 goto :EOF
+
 echo.
 echo Successfully created WindowKey source distribution %DESTFILE%.
-goto :EOF
-
-:NOVERSION
-echo Error: no version given.

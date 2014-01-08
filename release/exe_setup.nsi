@@ -109,6 +109,7 @@ Section Uninstall
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
 
+  ; Delete from both All Users and current user Startup
   SetShellVarContext current
   Delete "$SMPROGRAMS\Startup\WindowKey.lnk"
 
