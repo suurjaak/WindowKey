@@ -37,13 +37,19 @@ Dependencies
 
 Runs under Windows.
 
+In source form, needs AutoHotkey.
+
 
 Attribution
 -----------
 
-Application icon from:
-  Fugue Icons, (c) 2010 Yusuke Kamiyamane,
-  http://p.yusukekamiyamane.com/
+Application icon from Fugue Icons, (c) 2010 Yusuke Kamiyamane
+(http://p.yusukekamiyamane.com/).
+
+Executable compiled with AutoHotkey 1.1.13.01 (http://www.autohotkey.com/).
+
+Installer created with Nullsoft Scriptable Install System 2.46
+(http://nsis.sourceforge.net/).
 
 
 
