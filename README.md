@@ -1,36 +1,56 @@
 WindowKey
 =========
 
-Background script for changing active window position and size with
-global Windows hotkeys. 
+Small tray program for changing active window position and size with global
+Windows hotkeys.
+
 
 Hotkeys:
 
 Key                                 | Action
 ----------------------------------- | -----------------------------------------
-Win Alt        + Left/Right/Up/Down | move window one step left/right/up/down
-Win Ctrl       + Left/Right/Up/Down | snap window to left/right/top/bottom edge
-Win Ctrl Shift + Left/Down          | increase window width/height
-Win Ctrl Shift + Right/Up           | decrease window width/height
+Win Alt        + Left/Right/Up/Down | snap window to left/right/top/bottom edge
+Win Ctrl       + Left/Right/Up/Down | move window left/right/up/down
+Win Ctrl Shift + Left               | decrease window width, or increase width from
+                                    | left if at screen right edge
+Win Ctrl Shift + Right              | increase window width, or decrease width from
+                                    | left if at screen right edge
+Win Ctrl Shift + Up                 | decrease window height, or increase width from
+                                    | top if at screen bottom edge
+Win Ctrl Shift + Up                 | decrease window height, or increase width from
+                                    | top if at screen bottom edge
+Win Ctrl Shift + Down               | increase window height, or decrease height from
+                                    | top if at screen bottom edge
+Win            + number             | move and size window to numbered grid position
+Win Ctrl       + A                  | toggle window always on top
 Win            + F10                | exit program
-                                    | 
-*** Win        + Numpad X ***       | *** move and size window to grid position X ***
-Win + Numpad 1                      | left edge, third of screen width, full height
-Win + Numpad 2                      | left edge, 2/5 of screen width, full height
-Win + Numpad 3                      | left edge, half of screen width, full height
-Win + Numpad 4                      | left edge, 3/5 of screen width, full height
-Win + Numpad 5                      | maximize window
-Win + Numpad 6                      | right edge, half of screen width, full height
-Win + Numpad 7                      | right edge, 2/5 of screen width, full height
-Win + Numpad 8                      | right edge, third of screen width, full height
-Win + Numpad 9                      | top right, third of screen width, half of screen height
-Win + Numpad 0                      | restore window previous position and size
+ | 
+***Win         + number***          | ***move and size window to grid position X***
+Win            + 1                  | left edge, third of screen width, full height
+Win            + 2                  | left edge, 2/5 of screen width, full height
+Win            + 3                  | left edge, half of screen width, full height
+Win            + 4                  | left edge, 3/5 of screen width, full height
+Win            + 5                  | left edge, 2/3 of screen width, full height
+Win            + 6                  | left edge, 4/5 of screen width, full height
+Win            + 7                  | right edge, 2/5 of screen width, full height
+Win            + 8                  | right edge, third of screen width, full height
+Win            + 9                  | top right, third of screen width, half of screen height
+Win            + 0                  | restore window previous position and size
 
 
 Dependencies
 ------------
 
-Runs under Windows, Python 2.6+ or 3+.
+Runs under Windows.
+
+
+Attribution
+-----------
+
+Application icon from:
+  Fugue Icons, (c) 2010 Yusuke Kamiyamane,
+  http://p.yusukekamiyamane.com/
+
 
 
 License
