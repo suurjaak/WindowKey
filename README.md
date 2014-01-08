@@ -11,16 +11,10 @@ Key                                 | Action
 ----------------------------------- | -----------------------------------------
 Win Alt        + Left/Right/Up/Down | snap window to left/right/top/bottom edge
 Win Ctrl       + Left/Right/Up/Down | move window left/right/up/down
-Win Ctrl Shift + Left               | decrease window width, or increase width from
-                                    | left if at screen right edge
-Win Ctrl Shift + Right              | increase window width, or decrease width from
-                                    | left if at screen right edge
-Win Ctrl Shift + Up                 | decrease window height, or increase width from
-                                    | top if at screen bottom edge
-Win Ctrl Shift + Up                 | decrease window height, or increase width from
-                                    | top if at screen bottom edge
-Win Ctrl Shift + Down               | increase window height, or decrease height from
-                                    | top if at screen bottom edge
+Win Ctrl Shift + Left               | reduce width, or expand left if at screen right edge
+Win Ctrl Shift + Right              | expand width, or reduce from left if at screen right edge
+Win Ctrl Shift + Up                 | reduce height, or expand up if at screen bottom edge
+Win Ctrl Shift + Down               | expand height, or reduce from top if at screen bottom edge
 Win            + number             | move and size window to numbered grid position
 Win Ctrl       + A                  | toggle window always on top
 Win            + F10                | exit program
