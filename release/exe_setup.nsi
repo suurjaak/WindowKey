@@ -34,6 +34,8 @@
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
 !define MUI_FINISHPAGE_RUN "$INSTDIR\WindowKey.exe"
+!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\README.txt"
+!define MUI_FINISHPAGE_SHOWREADME_NOTCHECKED
 !insertmacro MUI_PAGE_FINISH
 
 ; Uninstaller pages
@@ -61,6 +63,9 @@ Section "MainSection" SEC01
   File "WindowKey.exe"
   CreateDirectory "$SMPROGRAMS\WindowKey"
   CreateShortCut "$SMPROGRAMS\WindowKey\WindowKey.lnk" "$INSTDIR\WindowKey.exe"
+  SetOverwrite ifnewer
+  File "README.txt"
+  CreateShortCut "$SMPROGRAMS\WindowKey\WindowKey README.lnk" "$INSTDIR\README.txt"
 SectionEnd
 
 Section -AdditionalIcons
@@ -96,9 +101,11 @@ Section Uninstall
   SetShellVarContext all
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\uninst.exe"
+  Delete "$INSTDIR\README.txt"
   Delete "$INSTDIR\WindowKey.exe"
 
   Delete "$SMPROGRAMS\WindowKey\WindowKey.lnk"
+  Delete "$SMPROGRAMS\WindowKey\WindowKey README.lnk"
   Delete "$SMPROGRAMS\WindowKey\WindowKey Homepage.lnk"
   Delete "$SMPROGRAMS\WindowKey\Uninstall WindowKey.lnk"
   Delete "$SMPROGRAMS\Startup\WindowKey.lnk"
