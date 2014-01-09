@@ -11,23 +11,23 @@ Key                                 | Action
 ----------------------------------- | -----------------------------------------
 Win Alt        + Left/Right/Up/Down | snap window to left/right/top/bottom edge
 Win Ctrl       + Left/Right/Up/Down | move window left/right/up/down
-Win Ctrl Shift + Left               | reduce width, or expand left if at screen right edge
+Win Ctrl Shift + Left               | reduce width, or expand to the left if at screen right edge
 Win Ctrl Shift + Right              | expand width, or reduce from left if at screen right edge
-Win Ctrl Shift + Up                 | reduce height, or expand up if at screen bottom edge
+Win Ctrl Shift + Up                 | reduce height, or expand upward if at screen bottom edge
 Win Ctrl Shift + Down               | expand height, or reduce from top if at screen bottom edge
 Win            + number             | move and size window to numbered grid position
 Win Ctrl       + A                  | toggle window always on top
 Win            + F10                | exit program
  | 
 ***Win         + number***          | ***move and size window to grid position X***
-Win            + 1                  | left edge, third of screen width, full height
-Win            + 2                  | left edge, 2/5 of screen width, full height
-Win            + 3                  | left edge, half of screen width, full height
-Win            + 4                  | left edge, 3/5 of screen width, full height
-Win            + 5                  | left edge, 2/3 of screen width, full height
-Win            + 6                  | left edge, 4/5 of screen width, full height
-Win            + 7                  | right edge, 2/5 of screen width, full height
-Win            + 8                  | right edge, third of screen width, full height
+Win            + 1                  | on the left, third of screen width, full height
+Win            + 2                  | on the left, 2/5 of screen width, full height
+Win            + 3                  | on the left, half of screen width, full height
+Win            + 4                  | on the left, 3/5 of screen width, full height
+Win            + 5                  | on the left, 2/3 of screen width, full height
+Win            + 6                  | on the left, 4/5 of screen width, full height
+Win            + 7                  | on the right, 2/5 of screen width, full height
+Win            + 8                  | on the right, third of screen width, full height
 Win            + 9                  | top right, third of screen width, half of screen height
 Win            + 0                  | restore window previous position and size
 
