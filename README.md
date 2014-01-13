@@ -37,7 +37,7 @@ Dependencies
 
 Runs under Windows.
 
-In source form, needs AutoHotkey.
+In source code form, needs AutoHotkey.
 
 
 Attribution
