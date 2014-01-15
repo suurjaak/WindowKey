@@ -1,5 +1,5 @@
-WindowKey
-=========
+WindowKey 1.3
+=============
 
 Small tray program for changing active window position and size with global
 Windows hotkeys.
@@ -7,35 +7,41 @@ Windows hotkeys.
 
 Hotkeys:
 
-Win Alt        + Left/Right/Up/Down  snap window to left/right/top/bottom edge
-Win Ctrl       + Left/Right/Up/Down  move window left/right/up/down
-Win Ctrl Shift + Left                reduce width, or expand to the left if at screen right edge
-Win Ctrl Shift + Right               expand width, or reduce from left if at screen right edge
-Win Ctrl Shift + Up                  reduce height, or expand upward if at screen bottom edge
-Win Ctrl Shift + Down                expand height, or reduce from top if at screen bottom edge
-Win            + number              move and size window to numbered grid position
-Win Ctrl       + A                   toggle window always on top
-Win            + F10                 exit program
+Win            + Left/Right/Up/Down   move window one step (20px) in arrow direction
+Win Alt        + Left/Right/Up/Down   snap window to left/right/top/bottom edge
+Win Shift      + Left/Right/Up/Down   resize window one step (20px) to/from arrow direction
+Win Ctrl       + Left/Right/Up/Down   move window one pixel in arrow direction
+Win Ctrl Shift + Left/Right/Up/Down   resize window one pixel to/from arrow direction
+Win Ctrl       + A                    toggle window always on top
+Win            + F10                  exit program
 
 
 Grid hotkeys:
 
-Win            + 1                   on the left, third of screen width, full height
-Win            + 2                   on the left, 2/5 of screen width, full height
-Win            + 3                   on the left, half of screen width, full height
-Win            + 4                   on the left, 3/5 of screen width, full height
-Win            + 5                   on the left, 2/3 of screen width, full height
-Win            + 6                   on the left, 4/5 of screen width, full height
-Win            + 7                   on the right, 2/5 of screen width, full height
-Win            + 8                   on the right, third of screen width, full height
-Win            + 9                   top right, third of screen width, half of screen height
-Win            + 0                   restore window previous position and size
+Win + 1                               2/5 of screen from left, full height
+Win + 2                               1/2 of screen from left, full height
+Win + 3                               3/5 of screen from left, full height
+Win + 4                               2/3 of screen from left, full height
+Win + 5                               4/5 of screen from left, full height
+Win + 6                               2/5 of screen from right, full height
+Win + 7                               1/3 of screen from right, full height
+Win + 8                               1/2 of screen in top right, 2/3 of height
+Win + 9                               1/3 of screen in top right, 1/2 of height
+Win + 0                               restore window previous position and size
+
+
+Windows stay within screen bounds and snap against the edge.
+
+Resize goes into reverse at screen edge. For example, Down usually expands
+height below, but starts reducing height above when window is at the bottom.
+Similarly, Left usually reduces width from the right, but starts expanding
+width to the left when window is against screen right edge.
 
 
 Dependencies
 ------------
 
-Runs under Windows.
+Runs under Microsoft Windows. Tested under Windows 7 and Windows XP.
 
 
 Attribution
