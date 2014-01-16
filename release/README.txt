@@ -12,6 +12,7 @@ Win Alt        + Left/Right/Up/Down   snap window to left/right/top/bottom edge
 Win Shift      + Left/Right/Up/Down   resize window one step (20px) to/from arrow direction
 Win Ctrl       + Left/Right/Up/Down   move window one pixel in arrow direction
 Win Ctrl Shift + Left/Right/Up/Down   resize window one pixel to/from arrow direction
+Win Ctrl Alt   + Left/Right/Up/Down   move window one step in arrow direction, ignoring screen bounds
 Win Ctrl       + A                    toggle window always on top
 Win            + F10                  exit program
 
